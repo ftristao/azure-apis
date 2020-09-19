@@ -7,17 +7,17 @@ module.exports = async function (context, req) {
     } = await createMongoClient();
     const Frases = MongoClient.collection('frases');
 
-    var count = Frases.collections.count()
-    var rand = () => Math.floor(Math.random() * count);
+    var count = await Frases.countDocuments();
+    function rand() {
+        return Math.floor(Math.random() * count);
+    }
     
-    const res = await Frases.collection.find().limit(-1).skip(rand()).next();
-
-    const body = await res.toArray();
-
+    const res = await Frases.find().limit(-1).skip(rand()).next();
+    
     closeConnectionFn();
 
     context.res = {
         status: 200,
-        body,
+        body: res,
     };
 };

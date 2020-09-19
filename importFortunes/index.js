@@ -3,8 +3,7 @@ const createMongoClient = require('../shared/database');
 module.exports = async function (context, req) {
   
     const frases = req.body;
-    const chave  = req.params.chave;
-
+    
     const {
         client: MongoClient,
         closeConnectionFn

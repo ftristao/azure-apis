@@ -2,19 +2,27 @@ const createMongoClient = require('../shared/database');
 
 module.exports = async function (context, req) {
   
-    const {
-        client: MongoClient,
-        closeConnectionFn
-    } = await createMongoClient();
+    if (req.headers.chave_limpeza.equals("LIMPEZA_TOTAL")) {
 
-    const Frases = MongoClient.collection('frases');
+        const {
+            client: MongoClient,
+            closeConnectionFn
+        } = await createMongoClient();
 
-    const res = await Frases.deleteMany({});
-    
-    closeConnectionFn();
+        const Frases = MongoClient.collection('frases');
 
-    context.res = {
-        status: 200,
-        body: res
-    };
+        const res = await Frases.deleteMany({});
+        
+        closeConnectionFn();
+
+        context.res = {
+            status: 200,
+            body: res
+        };
+    } else {
+        context.res = {
+            status: 401,
+            body: "[]"
+        };
+    }
 };
