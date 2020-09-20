@@ -9,3 +9,5 @@ Rode a aplicação com:
 npm install
 function host start
 
+# Sugestões
+Implentar saída por partes, caso a base se torne grande demais para retornar em um único get.
